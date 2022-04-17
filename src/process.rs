@@ -10,6 +10,6 @@ pub async fn process_session(stream: &mut TcpStream) -> std::io::Result<()> {
     stream.read_line(&mut result).await?;
     println!("Recieved {}", result);
 
-    stream.write_all(b"PONG").await?;
+    stream.write_all(b"+PONG\r\n").await?;
     Ok(())
 }
