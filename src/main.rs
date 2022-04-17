@@ -5,6 +5,8 @@ use std::fs;
 use tokio::net::TcpListener;
 use std::error::Error;
 
+pub mod process;
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -14,8 +16,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut listener = TcpListener::bind("127.0.0.1:6379").await?;
 
     loop {
-        let (stream, addr) = listener.accept().await?;
+        let (mut stream, addr) = listener.accept().await?;
         println!("New connection from {}", addr);
-    }
 
+        process::process_session(&mut stream).await?;
+    }
 }
+
+
