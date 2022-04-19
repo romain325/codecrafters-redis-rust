@@ -95,6 +95,7 @@ fn get_bulk(command: String, rest: String) -> std::io::Result<String> {
 
 fn exec_command(command: String) -> std::io::Result<String> {
     let command_part : Vec<&str> = command.split(" ").collect();
+    println!("command: {}", command);
     let result = match command_part[0] {
         "PING" => b"PONG\r\n".to_vec(),
         "QUIT" => return Err(Error::new(ErrorKind::ConnectionAborted, "Goodbye")),
