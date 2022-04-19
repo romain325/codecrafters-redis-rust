@@ -4,12 +4,11 @@ use tokio::io::AsyncWriteExt;
 use tokio::io::AsyncBufReadExt;
 
 pub async fn process_session(stream: &mut TcpStream) -> std::io::Result<()> {
-    let mut stream = BufReader::new(stream);
+    let mut reader = BufReader::new(stream);
 
-    let mut result = String::new();
-    stream.read_line(&mut result).await?;
-    println!("Recieved {}", result);
-
-    stream.write_all(b"+PONG\r\n").await?;
-    Ok(())
+    loop {
+        let mut ahaum = String::new();
+        reader.read_line(&mut ahaum).await?;
+        reader.write_all(b"+PONG\r\n").await?;
+    }
 }
