@@ -19,8 +19,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let (mut stream, addr) = listener.accept().await?;
         println!("New connection from {}", addr);
 
-        let finished = Some(process::process_session(&mut stream).await.err());
-        println!("Close connection with {} because {:?}", addr, finished);
+        tokio::spawn(async move {
+            let finished = Some(process::process_session(&mut stream).await.err());
+            println!("Close connection with {} because {:?}", addr, finished);
+        });
     }
 }
 
