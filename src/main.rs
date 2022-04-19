@@ -6,6 +6,7 @@ use tokio::net::TcpListener;
 use std::error::Error;
 
 pub mod process;
+pub mod command;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
