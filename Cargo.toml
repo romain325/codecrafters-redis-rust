@@ -22,3 +22,4 @@ edition = "2018"
 bytes = "0.5" # helps manage buffers
 tokio = { version = "0.2", features = ["full"] } # async networking
 async-recursion = "1"
+lazy_static = "1.4"

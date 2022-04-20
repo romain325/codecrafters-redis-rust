@@ -5,8 +5,12 @@ use std::fs;
 use tokio::net::TcpListener;
 use std::error::Error;
 
+#[macro_use]
+extern crate lazy_static;
+
 pub mod process;
 pub mod command;
+pub mod store;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

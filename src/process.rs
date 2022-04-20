@@ -5,8 +5,7 @@ use tokio::io::AsyncBufReadExt;
 use std::io::{Error, ErrorKind};
 use async_recursion::async_recursion;
 
-use crate::command::ping;
-use crate::command::echo;
+use crate::command::{ping,echo,set,get};
 
 pub async fn process_session(stream: &mut TcpStream) -> std::io::Result<()> {
     let mut reader = BufReader::new(stream);
@@ -105,6 +104,10 @@ fn exec_command(command: String) -> std::io::Result<String> {
         "QUIT" => return Err(Error::new(ErrorKind::ConnectionAborted, "Goodbye")),
         "ECHO" => echo(command_part),
         "echo" => echo(command_part),
+        "set" => set(command_part),
+        "SET" => set(command_part),
+        "get" => get(command_part),
+        "GET" => get(command_part),
         _default => ping()
     };
     Ok(String::from_utf8(result).unwrap())
