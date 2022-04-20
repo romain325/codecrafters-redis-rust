@@ -19,6 +19,6 @@ pub fn set(command_part : Vec<&str>) -> Vec<u8> {
         b"-Error while adding to store\r\n".to_vec()
     } else {
         set_in_store(command_part[1].to_string(), command_part[2].to_string());
-        b"OK\r\n".to_vec()
+        b"+OK\r\n".to_vec()
     }
 }
