@@ -10,6 +10,7 @@ extern crate lazy_static;
 
 pub mod process;
 pub mod command;
+#[macro_use]
 pub mod store;
 
 #[tokio::main]

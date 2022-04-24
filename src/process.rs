@@ -22,7 +22,7 @@ pub async fn process_session(stream: &mut TcpStream) -> std::io::Result<()> {
         }
 
         let command = parse_str(input, &mut reader).await?;
-        let output  = exec_command(command)?;
+        let output  = exec_command(command).await?;
         reader.write_all(output.as_bytes()).await?;
     }
 }
@@ -95,7 +95,7 @@ fn get_bulk(command: String, rest: String) -> std::io::Result<String> {
     Ok(value.chars().into_iter().take(size as usize).collect())
 }
 
-fn exec_command(command: String) -> std::io::Result<String> {
+async fn exec_command(command: String) -> std::io::Result<String> {
     let command_part : Vec<&str> = command.split(" ").collect();
     println!("command: {}", command);
     let result = match command_part[0] {
@@ -104,8 +104,8 @@ fn exec_command(command: String) -> std::io::Result<String> {
         "QUIT" => return Err(Error::new(ErrorKind::ConnectionAborted, "Goodbye")),
         "ECHO" => echo(command_part),
         "echo" => echo(command_part),
-        "set" => set(command_part),
-        "SET" => set(command_part),
+        "set" => set(command_part).await,
+        "SET" => set(command_part).await,
         "get" => get(command_part),
         "GET" => get(command_part),
         _default => ping()
