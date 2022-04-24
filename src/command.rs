@@ -11,7 +11,7 @@ pub fn echo(command_part: Vec<&str> ) -> Vec<u8> {
 }
 
 pub fn get(command_part: Vec<&str>) -> Vec<u8> {
-    format!("+{}\r\n", get_in_store(command_part[1].to_string())).as_bytes().to_vec()
+    get_in_store(command_part[1].to_string()).as_bytes().to_vec()
 }
 
 pub async fn set(command_part : Vec<&str>) -> Vec<u8> {
