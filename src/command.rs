@@ -18,7 +18,7 @@ pub async fn set(command_part : Vec<&str>) -> Vec<u8> {
     if command_part.len() < 2 || command_part[1] == "" {
         b"-Error while adding to store\r\n".to_vec()
     } else {
-        if command_part.len() >= 5 && command_part[3] == "PX" && command_part[4].parse::<i64>().is_ok() {
+        if command_part.len() >= 5 && (command_part[3] == "PX" || command_part[3] == "px") && command_part[4].parse::<i64>().is_ok() {
             set_in_store(command_part[1].to_string(), command_part[2].to_string(), command_part[4].parse().unwrap()).await;
         } else {
             set_in_store(command_part[1].to_string(), command_part[2].to_string(), -1).await;
