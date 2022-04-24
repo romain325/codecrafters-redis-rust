@@ -24,6 +24,6 @@ pub async fn set_in_store(key: String, value: String, expiry: i64) {
 pub fn get_in_store(key: String) -> String {
     match STORE.lock().unwrap().get(&key) {
         Some(val) => val.clone(),
-        None => "".to_string()
+        None => "$-1\r\n".to_string()
     }
 }
